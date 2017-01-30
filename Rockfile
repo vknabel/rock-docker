@@ -1,0 +1,13 @@
+name: RockDocker
+dependencies: []
+constants:
+  container:
+    name: vknabel/rock
+scripts:
+  build: cd Container && docker build -t {{constants.container.name}} .
+  test: cd Container && docker run -it --rm --name rock-test {{constants.container.name}} rock version
+  bash: cd Container && docker run -it {{constants.container.name}} bash
+  version: cd Container && docker run -it {{constants.container.name}} rock version
+  push:
+    - docker login --username vknabel --password "$DOCKER_HUB_PASSWORD"
+    - cd Container && docker push {{constants.container.name}}
